@@ -248,8 +248,27 @@ are breaking us"). Hence `title` is dropped from `shell-integration-features`
 and `zshrc-additions.zsh` reimplements both behaviours it provided — cwd at the
 prompt, running command during execution — in six lines.
 
-Note the runtime value is normalised and not what you wrote: a config of
-`cursor,sudo,title` reports as `GHOSTTY_SHELL_FEATURES=cursor:steady,path,sudo,title`.
+**`shell-integration-features` is additive over the defaults — omitting a
+feature does not disable it.** Rewriting the line as `cursor,sudo` looks like it
+drops `title`, and it silently does nothing: the effective value stays
+
+```
+cursor,sudo,title,no-ssh-env,no-ssh-terminfo,path
+```
+
+Disabling needs the `no-` prefix — `cursor,sudo,no-title`. This is invisible
+from the config file and produced no error or warning; the symptom was a new tab
+still reporting `title` in `$GHOSTTY_SHELL_FEATURES` after a clean reload, which
+looks like the reload failing rather than the setting being a no-op.
+
+The file is not the authority. Check what Ghostty actually parsed:
+
+```zsh
+ghostty +show-config | grep shell-integration
+```
+
+Same reason the runtime value never matches what you wrote: `cursor` is reported
+as `cursor:steady`, and `path` appears from the defaults regardless.
 
 ### Details worth keeping
 

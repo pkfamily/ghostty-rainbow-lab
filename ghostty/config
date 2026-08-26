@@ -27,11 +27,15 @@ copy-on-select = clipboard
 mouse-hide-while-typing = true
 confirm-close-surface = false
 shell-integration = detect
-# `title` is deliberately absent — zsh/zshrc-additions.zsh owns the tab title so
-# it can prefix a marker in Claude Code sessions. Ghostty installs its own title
-# hook from a deferred precmd that runs after ~/.zshrc, so there is nothing to
-# append to at rc time; the two cannot cooperate, only one can win.
-shell-integration-features = cursor,sudo
+# NOTE: this list is ADDITIVE over Ghostty's defaults, not a replacement. Omitting
+# a feature does not disable it — you need the `no-` prefix. Check the effective
+# value with `ghostty +show-config`, not by reading this line.
+#
+# `no-title` hands the tab title to zsh/zshrc-additions.zsh, which prefixes a
+# marker in Claude Code sessions. Ghostty installs its title hook from a deferred
+# precmd that runs after ~/.zshrc, so there is nothing to append to at rc time,
+# and it forces its hook last — the two cannot cooperate, only one can win.
+shell-integration-features = cursor,sudo,no-title
 scrollback-limit = 100000
 
 # --- Quake-style drop-down terminal (toggle with cmd+`) ---
