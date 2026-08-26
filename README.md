@@ -16,6 +16,7 @@ scripts/                palette + lolcat test harnesses (no API calls)
 starship/               9 prompt themes, incl. a hand-tuned "custom"
 zsh/_switcher.zsh       `prompt-theme` command
 zsh/zshrc-additions.zsh everything appended to ~/.zshrc
+claude/                 starship-rendered Claude Code status line
 ```
 
 ## Install
@@ -140,6 +141,77 @@ Not safe:
 - `lolcat -a` in a prompt — ~1s added to every command
 
 ---
+
+## Claude Code status line, rendered by starship
+
+Claude Code's `statusLine` runs any command, hands it session JSON on stdin, and
+prints stdout in a row at the bottom of the UI. Point it at starship and the bar
+matches the shell prompt — same separators, same `Rainbow` palette.
+
+```
+build-cli gateway | ████░░░░░░░░░░░░░░░░  $353.67 / $2,000.00 (17.7%) weekly
+  Opus 5  ghostty-rainbow-lab   main ?  ██░░░░░░░░ 23%  $0.42
+```
+
+Line 1 is delegated to build-cli untouched; line 2 is starship. Each `echo` is a
+row. Total runtime ~166 ms, of which ~127 ms is the build-cli call.
+
+`$directory`, `$git_branch`, `$git_status` come free — the script `cd`s to
+`workspace.current_dir` and starship's own modules do truncation, repo
+detection, and dirty-state glyphs. Claude-only data (model, context, cost)
+arrives as `env_var` modules, so it is styled in TOML like any other segment.
+
+Truecolor, so it is independent of the palette — same category as the prompt.
+
+```zsh
+cp -r claude ~/.config/ghostty-rainbow-claude   # or run it from the repo
+```
+
+Then set `statusLine.command` in `~/.claude/settings.json` to that
+`statusline.sh`, keeping `refreshInterval` so the budget line stays current
+while the session is idle.
+
+### Gotchas
+
+**`starship init zsh` exports `STARSHIP_SHELL=zsh`, and the script inherits it.**
+starship then wraps output in zsh's non-printing markers and doubles every
+literal `%`. Claude Code is not zsh, so it prints raw:
+
+```
+%{[38;2;199;125;255m%}  Opus 5 ... ██░░░░░░░░ 23%%
+```
+
+`unset STARSHIP_SHELL` before `starship prompt` fixes both symptoms.
+
+**starship skips an `env_var` module only when the variable is *unset*.**
+`export CC_CTX_WARN=""` still renders the format string. The context gauge uses
+three mutually exclusive vars for its green/yellow/red bands (starship has no
+conditionals), so the two inactive ones must be `unset`, not set to empty —
+otherwise they emit stray colored spaces after the bar.
+
+**`git_status` renders its format inside a repo even with no glyphs to show.**
+A bare trailing space to clear the powerline separator therefore leaks a stray
+space on every clean tree. Use a group — `[($all_status$ahead_behind )]` —
+which starship drops entirely when all variables inside are empty.
+
+**build-cli owns its statusline script.** `~/.config/build-cli/statusline.sh` is
+marked auto-generated and is overwritten by `build-cli claude setup`, which also
+repoints `statusLine.command`. `build-cli config set statusline_disabled true`
+is the documented escape hatch; without it, the next setup run silently reclaims
+the bar. The wrapper calls the `build-cli` binary directly rather than that
+generated script, and drops the line cleanly if the binary is missing.
+
+Two things that are easy to assume wrong about that flag, both measured:
+
+- It does **not** silence `build-cli claude statusline`. With the flag on, the
+  command still exits 0 and prints its 76 bytes, so line 1 survives. The flag
+  gates only what `setup` *writes*, not what the binary *prints*.
+- It is not immediate — it reports `Run 'build-cli claude setup' to apply`. It
+  is a standing guard against the next setup, not a change you can observe now.
+
+Setting it touches `~/.config/build-cli/config.json` only. Verified by checksum
+that `~/.claude/settings.json` and the generated script are both left alone, so
+enabling it cannot clobber a `statusLine.command` you have already repointed.
 
 ## Commands added
 
