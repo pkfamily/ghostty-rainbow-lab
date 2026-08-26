@@ -216,30 +216,52 @@ enabling it cannot clobber a `statusLine.command` you have already repointed.
 ## Marking agent-driven shells
 
 Claude Code exports `CLAUDECODE=1`, `CLAUDE_CODE_ENTRYPOINT`, and
-`CLAUDE_CODE_SESSION_ID`. Interactive shells it spawns inherit them, so an
-`env_var` module in `starship/custom.toml` flags the tab:
+`CLAUDE_CODE_SESSION_ID`, and interactive shells it spawns inherit them. The
+marker goes in the **tab title**, not the prompt:
 
 ```
- 󰚩 claude   …/ghostty-rainbow-lab   main !  15:18
- …/ghostty-rainbow-lab   main !  15:18
+󰚩 …/Repos/ghostty-rainbow-lab      agent-driven tab
+…/Repos/ghostty-rainbow-lab        normal tab
+󰚩 git rebase -i main               while a command runs
 ```
 
-**Scope is narrower than it first looks.** Ordinary Bash tool calls render no
-prompt at all — `PS1` is unset and `$-` reports non-interactive — so the marker
-never appears there. It shows only where a prompt is actually drawn under a
-Claude session: `zsh -i`, tmux panes started from one, a REPL or dev server that
-drops you to a shell. That is the case where a Ghostty tab is ambiguous.
+### Why the title and not the prompt
 
-The pill carries its own left and right caps rather than joining the gradient.
-starship has no conditionals, so the surrounding format cannot adapt to whether
-the module rendered; a self-contained pill is what lets it disappear without
-leaving a dangling separator. Verified absent when the variable is unset.
+- **A tab is the thing being disambiguated.** With `macos-titlebar-style = tabs`
+  the title is already in the tab bar. A prompt marker only exists at a prompt:
+  it scrolls away, and it never appears during agent tool calls at all, because
+  those run non-interactively with `PS1` unset.
+- **starship has no include mechanism.** `starship config` edits single keys;
+  there is no `include`/`extends`. A prompt marker is orthogonal to theme
+  choice, so putting it in themes means duplicating and recolouring it across
+  all nine, and remembering it for every new one.
+- Costs nothing per prompt, and survives `prompt-theme` switching.
 
-Caveat, same root cause as the status line gauge: `CLAUDECODE=""` still renders
-it. Presence is tested, not truthiness.
+### Ghostty's title feature has to be turned off
 
-Related: interactive shells spawned by Claude Code run `~/.zshrc` in full, so
-the lolcat greeting fires on each one.
+The two cannot cooperate. Ghostty's integration registers
+`_ghostty_deferred_init` as a precmd and only defines `_ghostty_precmd` when
+that *first fires* — after `~/.zshrc` has finished. So at rc time there is no
+function to append to, and the integration deliberately forces its own hook to
+the end of `precmd_functions` (its comment: "We'll break them as much as they
+are breaking us"). Hence `title` is dropped from `shell-integration-features`
+and `zshrc-additions.zsh` reimplements both behaviours it provided — cwd at the
+prompt, running command during execution — in six lines.
+
+Note the runtime value is normalised and not what you wrote: a config of
+`cursor,sudo,title` reports as `GHOSTTY_SHELL_FEATURES=cursor:steady,path,sudo,title`.
+
+### Details worth keeping
+
+The test is `[[ ${CLAUDECODE-} == 1 ]]`, not `-n`. An empty `CLAUDECODE` must not
+count — the same set-but-empty trap that bites `env_var` modules elsewhere here.
+
+Command titles run through `${1//[[:cntrl:]]}`, as Ghostty's own does. A command
+containing `\e]2;HIJACK\a` loses its `ESC` and lands in the title as inert text;
+verified the output carries exactly one `ESC`, the opener.
+
+Related: interactive shells spawned by Claude Code run `~/.zshrc` in full, so the
+lolcat greeting fires on each one.
 
 ## Commands added
 
