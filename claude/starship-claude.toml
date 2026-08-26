@@ -1,0 +1,57 @@
+# starship config used ONLY for the Claude Code status line.
+# Colors mirror ghostty/themes/Rainbow so the status line matches the terminal.
+add_newline = false
+format = """
+[](fg:#c77dff)\
+[${env_var.CC_MODEL}](bg:#c77dff fg:#14121f)\
+[](fg:#c77dff bg:#4fa8ff)\
+[ $directory ](bg:#4fa8ff fg:#14121f)\
+[](fg:#4fa8ff bg:#2a2640)\
+[$git_branch$git_status](bg:#2a2640)\
+[](fg:#2a2640 bg:#3a2f5c)\
+[${env_var.CC_CTX_OK}${env_var.CC_CTX_WARN}${env_var.CC_CTX_HIGH}${env_var.CC_COST}](bg:#3a2f5c)\
+[](fg:#3a2f5c)\
+"""
+
+[directory]
+style = "bg:#4fa8ff fg:#14121f"
+format = "[$path]($style)"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+style = "bg:#2a2640 fg:#5ddb7f"
+format = "[ $symbol$branch ]($style)"
+symbol = " "
+
+[git_status]
+style = "bg:#2a2640 fg:#ffc857"
+# The (...) group keeps status glyphs off the powerline separator without
+# leaving a stray space on a clean tree. A bare trailing space does NOT work:
+# inside a repo the module still renders its format even with no glyphs to show.
+format = "[($all_status$ahead_behind )]($style)"
+
+[env_var.CC_MODEL]
+variable = "CC_MODEL"
+format = " [ $env_value ]($style)"
+style = "bg:#c77dff fg:#14121f"
+
+[env_var.CC_CTX_OK]
+variable = "CC_CTX_OK"
+format = "[ $env_value]($style)"
+style = "bg:#3a2f5c fg:#5ddb7f"
+
+[env_var.CC_CTX_WARN]
+variable = "CC_CTX_WARN"
+format = "[ $env_value]($style)"
+style = "bg:#3a2f5c fg:#ffc857"
+
+[env_var.CC_CTX_HIGH]
+variable = "CC_CTX_HIGH"
+format = "[ $env_value]($style)"
+style = "bg:#3a2f5c fg:#ff4f6d"
+
+[env_var.CC_COST]
+variable = "CC_COST"
+format = "[ $env_value ]($style)"
+style = "bg:#3a2f5c fg:#d8d4e8"
