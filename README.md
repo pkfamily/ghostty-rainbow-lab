@@ -276,7 +276,36 @@ since existing shells keep the hooks they started with. A correct result reads
 Same reason the runtime value never matches what you wrote: `cursor` is reported
 as `cursor:steady`, and `path` appears from the defaults regardless.
 
+### Seeing it
+
+In a **new** tab — existing ones keep the hooks they started with:
+
+```zsh
+CLAUDECODE=1 zsh -i    # title gains the marker; `exit` reverts it
+```
+
+With a single tab there is no tab strip and the title sits in the window
+titlebar instead; `cmd+t` gives you a strip to compare across.
+
+A tab showing the plain directory proves nothing on its own — Ghostty's built-in
+`title` renders that too, so both implementations look identical at rest. Tell
+them apart by the truncation shape (this one emits `…/` plus the last three
+segments) or by asking `$GHOSTTY_SHELL_FEATURES` directly.
+
+Headless testing only goes so far. Calling `_tt_precmd` / `_tt_preexec` directly
+does verify the mark and the sanitisation, but `zsh -i -c 'true'` never renders a
+prompt and so emits zero title writes — the prompt cycle has to be driven by a
+real terminal.
+
 ### Details worth keeping
+
+The marker `󰚩` is `U+F06A9`, in the Supplementary Private Use Area — a Nerd Font
+codepoint. It renders in the tab bar only because CoreText's fallback finds
+JetBrainsMono Nerd Font among the installed fonts; the tab bar itself draws in
+the system UI font, which has no PUA coverage. So the marker degrades to a tofu
+box — silently, while everything else keeps working — if the Nerd Font is
+uninstalled, or this repo lands on a machine without it. Swap `_tt_mark` to `🤖 `
+(universal coverage) or `● ` / `[cc] ` (monochrome) if that happens.
 
 The test is `[[ ${CLAUDECODE-} == 1 ]]`, not `-n`. An empty `CLAUDECODE` must not
 count — the same set-but-empty trap that bites `env_var` modules elsewhere here.
