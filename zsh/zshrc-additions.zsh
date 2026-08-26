@@ -1,3 +1,9 @@
+# Allow `#` comments at an interactive prompt. Off by default in zsh (unlike
+# bash), so pasting any snippet with a trailing comment is a parse error that
+# aborts the whole paste, not just the commented line. Frameworks like oh-my-zsh
+# set this, which is why the gotcha is easy to miss.
+setopt interactive_comments
+
 # zoxide — smarter cd (use `z <partial-name>` to jump)
 eval "$(zoxide init zsh)"
 

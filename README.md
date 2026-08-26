@@ -267,6 +267,12 @@ The file is not the authority. Check what Ghostty actually parsed:
 ghostty +show-config | grep shell-integration
 ```
 
+`cmd+shift+,` is enough to apply it — no app restart. Worth stating because the
+additive-flags trap makes it look otherwise: the setting appears not to reload,
+when in fact it reloaded a value that had not changed. Confirm in a **new** tab,
+since existing shells keep the hooks they started with. A correct result reads
+`cursor:steady,path,sudo` — `no-title` shows up as absence, not as an entry.
+
 Same reason the runtime value never matches what you wrote: `cursor` is reported
 as `cursor:steady`, and `path` appears from the defaults regardless.
 
