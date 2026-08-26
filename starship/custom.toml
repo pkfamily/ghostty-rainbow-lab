@@ -1,0 +1,73 @@
+# Rainbow powerline prompt — gradient runs purple → blue → cyan → green → yellow
+add_newline = true
+
+format = """
+[](fg:#8844ff)\
+[ $directory](bg:#8844ff fg:#f5f3ff bold)\
+[](fg:#8844ff bg:#4fa8ff)\
+[$git_branch$git_status](bg:#4fa8ff fg:#0d1117 bold)\
+[](fg:#4fa8ff bg:#4fd6d6)\
+[$python$nodejs$rust$golang$java](bg:#4fd6d6 fg:#0d1117 bold)\
+[](fg:#4fd6d6 bg:#5ddb7f)\
+[$cmd_duration](bg:#5ddb7f fg:#0d1117 bold)\
+[](fg:#5ddb7f bg:#ffc857)\
+[ $time ](bg:#ffc857 fg:#0d1117 bold)\
+[](fg:#ffc857)\
+$line_break$character"""
+
+[directory]
+format = "[$path]($style)[$read_only]($style) "
+style = "bg:#8844ff fg:#f5f3ff bold"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " "
+
+[git_branch]
+symbol = " "
+format = "[ $symbol$branch ]($style)"
+style = "bg:#4fa8ff fg:#0d1117 bold"
+
+[git_status]
+format = "[$all_status$ahead_behind ]($style)"
+style = "bg:#4fa8ff fg:#7a0016 bold"
+
+[python]
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+style = "bg:#4fd6d6 fg:#0d1117 bold"
+
+[nodejs]
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+style = "bg:#4fd6d6 fg:#0d1117 bold"
+
+[rust]
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+style = "bg:#4fd6d6 fg:#0d1117 bold"
+
+[golang]
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+style = "bg:#4fd6d6 fg:#0d1117 bold"
+
+[java]
+symbol = " "
+format = "[ $symbol($version) ]($style)"
+style = "bg:#4fd6d6 fg:#0d1117 bold"
+
+[cmd_duration]
+min_time = 500
+format = "[ 󱎫 $duration ]($style)"
+style = "bg:#5ddb7f fg:#0d1117 bold"
+
+[time]
+disabled = false
+time_format = "%R"
+format = "[$time]($style)"
+style = "bg:#ffc857 fg:#0d1117 bold"
+
+[character]
+success_symbol = "[❯](bold #5ddb7f)"
+error_symbol = "[❯](bold #ff4f6d)"
+vimcmd_symbol = "[❮](bold #ffc857)"
