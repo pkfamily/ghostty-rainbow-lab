@@ -1,0 +1,40 @@
+# Ghostty config — reload with cmd+shift+,
+# Full reference: `ghostty +show-config --default --docs`
+
+# --- Appearance ---
+theme = Rainbow
+font-family = JetBrainsMono Nerd Font Mono
+font-size = 14
+font-thicken = true
+background-opacity = 0.95
+background-blur-radius = 20
+cursor-style = block
+cursor-style-blink = false
+adjust-cell-height = 10%
+
+# --- Window / macOS ---
+macos-titlebar-style = tabs
+macos-option-as-alt = true
+window-save-state = always
+window-padding-x = 8
+window-padding-y = 6
+window-padding-balance = true
+window-inherit-working-directory = true
+window-inherit-font-size = true
+
+# --- Behavior ---
+copy-on-select = clipboard
+mouse-hide-while-typing = true
+confirm-close-surface = false
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+scrollback-limit = 100000
+
+# --- Quake-style drop-down terminal (toggle with cmd+`) ---
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+quick-terminal-position = top
+quick-terminal-animation-duration = 0.15
+
+# --- Handy keybinds ---
+keybind = cmd+shift+f=toggle_fullscreen
+keybind = cmd+k=clear_screen
