@@ -213,6 +213,34 @@ Setting it touches `~/.config/build-cli/config.json` only. Verified by checksum
 that `~/.claude/settings.json` and the generated script are both left alone, so
 enabling it cannot clobber a `statusLine.command` you have already repointed.
 
+## Marking agent-driven shells
+
+Claude Code exports `CLAUDECODE=1`, `CLAUDE_CODE_ENTRYPOINT`, and
+`CLAUDE_CODE_SESSION_ID`. Interactive shells it spawns inherit them, so an
+`env_var` module in `starship/custom.toml` flags the tab:
+
+```
+ 󰚩 claude   …/ghostty-rainbow-lab   main !  15:18
+ …/ghostty-rainbow-lab   main !  15:18
+```
+
+**Scope is narrower than it first looks.** Ordinary Bash tool calls render no
+prompt at all — `PS1` is unset and `$-` reports non-interactive — so the marker
+never appears there. It shows only where a prompt is actually drawn under a
+Claude session: `zsh -i`, tmux panes started from one, a REPL or dev server that
+drops you to a shell. That is the case where a Ghostty tab is ambiguous.
+
+The pill carries its own left and right caps rather than joining the gradient.
+starship has no conditionals, so the surrounding format cannot adapt to whether
+the module rendered; a self-contained pill is what lets it disappear without
+leaving a dangling separator. Verified absent when the variable is unset.
+
+Caveat, same root cause as the status line gauge: `CLAUDECODE=""` still renders
+it. Presence is tested, not truthiness.
+
+Related: interactive shells spawned by Claude Code run `~/.zshrc` in full, so
+the lolcat greeting fires on each one.
+
 ## Commands added
 
 | Command | Does |
