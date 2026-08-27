@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="150" viewBox="0 0 1120 150" role="img" aria-labelledby="title desc">
+  <title id="title">Ghostty Rainbow ANSI palette</title>
+  <desc id="desc">The sixteen indexed colors used by the Rainbow Ghostty theme.</desc>
+  <rect width="1120" height="150" rx="20" fill="#14121f"/>
+  <g font-family="JetBrains Mono, ui-monospace, monospace" font-size="14" text-anchor="middle" fill="#e8e6f0">
+    <g transform="translate(24 30)">
+      <rect width="58" height="58" rx="10" fill="#2a2640"/><text x="29" y="84">0</text>
+    </g>
+    <g transform="translate(92 30)">
+      <rect width="58" height="58" rx="10" fill="#ff4f6d"/><text x="29" y="84">1</text>
+    </g>
+    <g transform="translate(160 30)">
+      <rect width="58" height="58" rx="10" fill="#5ddb7f"/><text x="29" y="84">2</text>
+    </g>
+    <g transform="translate(228 30)">
+      <rect width="58" height="58" rx="10" fill="#ffc857"/><text x="29" y="84">3</text>
+    </g>
+    <g transform="translate(296 30)">
+      <rect width="58" height="58" rx="10" fill="#4fa8ff"/><text x="29" y="84">4</text>
+    </g>
+    <g transform="translate(364 30)">
+      <rect width="58" height="58" rx="10" fill="#c77dff"/><text x="29" y="84">5</text>
+    </g>
+    <g transform="translate(432 30)">
+      <rect width="58" height="58" rx="10" fill="#4fd6d6"/><text x="29" y="84">6</text>
+    </g>
+    <g transform="translate(500 30)">
+      <rect width="58" height="58" rx="10" fill="#d8d4e8"/><text x="29" y="84">7</text>
+    </g>
+    <g transform="translate(568 30)">
+      <rect width="58" height="58" rx="10" fill="#4a4468"/><text x="29" y="84">8</text>
+    </g>
+    <g transform="translate(636 30)">
+      <rect width="58" height="58" rx="10" fill="#ff7d95"/><text x="29" y="84">9</text>
+    </g>
+    <g transform="translate(704 30)">
+      <rect width="58" height="58" rx="10" fill="#8ce8a5"/><text x="29" y="84">10</text>
+    </g>
+    <g transform="translate(772 30)">
+      <rect width="58" height="58" rx="10" fill="#ffd98a"/><text x="29" y="84">11</text>
+    </g>
+    <g transform="translate(840 30)">
+      <rect width="58" height="58" rx="10" fill="#85c4ff"/><text x="29" y="84">12</text>
+    </g>
+    <g transform="translate(908 30)">
+      <rect width="58" height="58" rx="10" fill="#dda5ff"/><text x="29" y="84">13</text>
+    </g>
+    <g transform="translate(976 30)">
+      <rect width="58" height="58" rx="10" fill="#85e8e8"/><text x="29" y="84">14</text>
+    </g>
+    <g transform="translate(1044 30)">
+      <rect width="52" height="58" rx="10" fill="#f5f3ff"/><text x="26" y="84">15</text>
+    </g>
+  </g>
+</svg>
