@@ -13,10 +13,10 @@
 </p>
 
 <p align="center">
-  <img alt="Ghostty 1.3.1" src="https://img.shields.io/badge/Ghostty-1.3.1-c77dff?style=for-the-badge&logo=ghostty&logoColor=white">
-  <img alt="macOS 25.5" src="https://img.shields.io/badge/macOS-25.5-4fa8ff?style=for-the-badge&logo=apple&logoColor=white">
-  <img alt="zsh" src="https://img.shields.io/badge/shell-zsh-4fd6d6?style=for-the-badge&logo=gnubash&logoColor=14121f">
-  <img alt="Starship" src="https://img.shields.io/badge/prompt-Starship-5ddb7f?style=for-the-badge&logo=starship&logoColor=14121f">
+  <a href="https://ghostty.org/"><img alt="Ghostty 1.3.1" src="https://img.shields.io/badge/Ghostty-1.3.1-c77dff?style=for-the-badge&logo=ghostty&logoColor=white"></a>
+  <a href="https://developer.apple.com/macos/"><img alt="macOS 25.5" src="https://img.shields.io/badge/macOS-25.5-4fa8ff?style=for-the-badge&logo=apple&logoColor=white"></a>
+  <a href="https://zsh.sourceforge.io/"><img alt="zsh" src="https://img.shields.io/badge/shell-zsh-4fd6d6?style=for-the-badge&logo=gnubash&logoColor=14121f"></a>
+  <a href="https://starship.rs/"><img alt="Starship" src="https://img.shields.io/badge/prompt-Starship-5ddb7f?style=for-the-badge&logo=starship&logoColor=14121f"></a>
 </p>
 
 <p align="center">
