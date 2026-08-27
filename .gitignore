@@ -1,3 +1,84 @@
+# Local macOS/editor artifacts
 .DS_Store
 *.bak
 *.tmp
+
+# --- 1. Environment/Configs/Secrets ---
+.env
+.env.*
+.secrets
+.netrc
+.npmrc
+.yarnrc
+.pypirc
+.bash_history
+.zsh_history
+auth.json
+config.json
+*.config.local
+*.cfg.local
+*.secret
+credentials.json
+client_secret.json
+
+# --- 2. CRYPTOGRAPHY & IDENTITY ---
+*.pem
+*.key
+*.pub
+*.cert
+*.crt
+*.pfx
+*.p12
+*.gpg
+*.asc
+*.keystore
+*.jks
+*.der
+*.csr
+.ssh/
+known_hosts
+authorized_keys
+
+# --- 3. CLOUD & INFRASTRUCTURE (CLI & PROVIDERS) ---
+.aws/
+.gcloud/
+.azure/
+.kube/
+.docker/
+.dockercfg
+.terraform/
+*.tfvars
+*.tfstate*
+.serverless/
+.elasticbeanstalk/
+.openstack/
+clisnap.json
+
+# --- 4. CI/CD & TOOLING SECRETS ---
+.circleci/
+.travis.yml
+.semaphore/
+.sonarcloud.properties
+sentry.properties
+
+# --- 5. LOGS & STORAGE (LEAKAGE POINTS) ---
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+crash.log
+syslog
+*.sql
+*.sqlite
+*.db
+*.dump
+dump.rdb
+.local_storage/
+.node_repl_history
+
+# --- 6. IDE & SYSTEM CACHES (CAN CONTAIN TOKENS) ---
+.vscode/
+.idea/
+.history/
+.vagrant/
+.kitchen/
