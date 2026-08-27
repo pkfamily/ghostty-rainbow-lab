@@ -17,6 +17,7 @@ starship/               9 prompt themes, incl. a hand-tuned "custom"
 zsh/_switcher.zsh       `prompt-theme` command
 zsh/zshrc-additions.zsh everything appended to ~/.zshrc
 claude/                 starship-rendered Claude Code status line
+codex/config.toml       native Codex CLI status-line and title settings
 ```
 
 ## Install
@@ -163,6 +164,8 @@ arrives as `env_var` modules, so it is styled in TOML like any other segment.
 
 Truecolor, so it is independent of the palette — same category as the prompt.
 
+Install the Claude statusline helper with:
+
 ```zsh
 cp -r claude ~/.config/ghostty-rainbow-claude   # or run it from the repo
 ```
@@ -170,6 +173,25 @@ cp -r claude ~/.config/ghostty-rainbow-claude   # or run it from the repo
 Then set `statusLine.command` in `~/.claude/settings.json` to that
 `statusline.sh`, keeping `refreshInterval` so the budget line stays current
 while the session is idle.
+
+## Codex CLI status line
+
+Codex CLI has a native, fixed-item status line rather than Claude Code's
+external command hook. The checked-in config selects model/reasoning, project,
+branch, run state, and context usage, with Codex's own syntax-theme colors:
+
+```zsh
+mkdir -p ~/.codex
+cp codex/config.toml ~/.codex/config.toml
+```
+
+If `~/.codex/config.toml` already exists, copy the `[tui]` settings into it
+instead of replacing the file. Restart Codex after changing the config.
+
+As of the current CLI, arbitrary Starship output and custom ANSI status-line
+commands are not supported, so the Claude statusline script cannot be reused
+inside Codex's TUI. Codex's native `terminal_title` setting does work with this
+setup because Ghostty's competing shell title hook is disabled.
 
 ### Gotchas
 
