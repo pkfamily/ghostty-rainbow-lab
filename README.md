@@ -83,6 +83,10 @@ share one pipe so the gradient flows continuously across the whole block. The
 startup hook is intentionally guarded with `command -v lolcat`, so the shell
 still works normally if lolcat is not installed.
 
+<p align="center">
+  <img src="screenshots/startup-greeting.png" width="900" alt="Rainbow lolcat startup greeting in Ghostty">
+</p>
+
 ## 🧪 Inside the lab
 
 | Area | What it contains |
