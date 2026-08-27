@@ -75,13 +75,21 @@ branch, context, and cost feel like part of the same terminal.
   </a>
 </p>
 
+### ✨ Rainbow startup greeting
+
+Every new interactive zsh shell opens with a small ASCII greeting and the date,
+colored by [`lolcat`](https://github.com/busyloop/lolcat). The banner and date
+share one pipe so the gradient flows continuously across the whole block. The
+startup hook is intentionally guarded with `command -v lolcat`, so the shell
+still works normally if lolcat is not installed.
+
 ## 🧪 Inside the lab
 
 | Area | What it contains |
 |---|---|
 | `ghostty/` | Main Ghostty config and the custom `Rainbow` ANSI theme |
 | `starship/` | Nine prompt themes, including the hand-tuned `custom` preset |
-| `zsh/` | Shell additions and the `prompt-theme` switcher |
+| `zsh/` | Shell additions, the lolcat startup greeting, and the `prompt-theme` switcher |
 | `scripts/` | Palette and lolcat test harnesses with no API calls |
 | `claude/` | Starship-rendered Claude Code status line |
 | `codex/` | Native Codex CLI status-line and terminal-title settings |
