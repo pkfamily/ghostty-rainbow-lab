@@ -7,9 +7,25 @@ setopt interactive_comments
 # zoxide — smarter cd (use `z <partial-name>` to jump)
 eval "$(zoxide init zsh)"
 
-# Rainbow greeting on new shells
+# Rainbow greeting on new shells. Regenerate the art with:
+#   figlet -f smslant poonv
+# It is baked in rather than shelled out because this runs on EVERY interactive
+# shell, and Claude Code spawns those constantly — same reason the date uses
+# zsh's builtin prompt strftime instead of date(1). lolcat is the only fork left.
+#
+# Single-quoted: the art is mostly backslashes and must not be escape-processed.
+# Banner and date share ONE lolcat pipe so the gradient runs continuously down
+# the block rather than restarting on the date line. -F 0.3 is correct despite
+# looking paragraph-sized — rows are 27 chars, which is one full hue sweep each.
 if command -v lolcat >/dev/null 2>&1; then
-  echo "welcome back, poonv  ·  $(date +%A\ %d\ %B)" | lolcat -f -S 240 -F 0.3
+  {
+    print -r -- '
+   ___  ___  ___  ___ _  __
+  / _ \/ _ \/ _ \/ _ \ |/ /
+ / .__/\___/\___/_//_/___/
+/_/'
+    print -r -- "welcome back  ·  ${(%):-"%D{%A %d %B}"}"
+  } | lolcat -f -S 240 -F 0.3
 fi
 
 # Colorized ls (BSD/macOS)

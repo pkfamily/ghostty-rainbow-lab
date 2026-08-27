@@ -35,6 +35,7 @@
 
 ```zsh
 brew install zoxide lolcat eza starship
+brew install figlet   # optional — only to regenerate the greeting banner
 brew install --cask font-jetbrains-mono-nerd-font
 
 cp -r ghostty/* ~/.config/ghostty/
@@ -148,6 +149,12 @@ long the text is. There is no single good value.
 
 Setting `-F 0.05` on a short greeting produced **solid green** — technically a
 gradient from `rgb(65,254,63)` to `rgb(147,227,9)`, visually one color.
+
+Count the **line** length, not the block length. A `figlet` banner looks like a
+paragraph but its rows are short — the `smslant` greeting is 5 rows of 27 chars,
+so it belongs in the 43-char column and wants `0.3`, not `0.02`. At `0.3` each
+row sweeps blue → cyan → green → yellow, and the per-row offset carries the
+gradient diagonally down the block.
 
 ### Ghostty falls back on unknown fonts silently
 
