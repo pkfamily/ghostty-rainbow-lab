@@ -5,7 +5,10 @@
 <h1 align="center">🌈 Ghostty Rainbow Lab</h1>
 
 <p align="center">
-  A colorful macOS terminal setup for Ghostty, Starship, Claude Code, and Codex.<br>
+  A colorful macOS terminal setup for <a href="https://ghostty.org/">Ghostty</a>,
+  <a href="https://starship.rs/">Starship</a>,
+  <a href="https://code.claude.com/docs/en/overview">Claude Code</a>, and
+  <a href="https://openai.com/codex/">Codex</a>.<br>
   Working configuration, measured behavior, and the gotchas worth remembering.
 </p>
 
@@ -51,14 +54,14 @@ Reload Ghostty with `cmd+shift+,`.
 The custom 16-slot ANSI palette keeps semantic terminal colors readable while
 giving every classic CLI tool a brighter personality.
 
-![Ghostty Rainbow ANSI palette and styles](screenshots/ghostty-rainbow.png)
+[![Ghostty Rainbow ANSI palette and styles](screenshots/ghostty-rainbow.png)](https://ghostty.org/)
 
 ### Starship Prompt
 
 Nine switchable prompt themes, including a hand-tuned powerline gradient from
 purple through blue, cyan, green, and yellow.
 
-![Rainbow Starship prompt themes](screenshots/starship-prompt.png)
+[![Rainbow Starship prompt themes](screenshots/starship-prompt.png)](https://starship.rs/)
 
 ### Claude CLI
 
@@ -66,7 +69,9 @@ Claude Code's status line is rendered through Starship so project, model,
 branch, context, and cost feel like part of the same terminal.
 
 <p align="center">
-  <img src="screenshots/claude-cli.png" width="820" alt="Claude CLI with a Starship-rendered status line">
+  <a href="https://code.claude.com/docs/en/overview">
+    <img src="screenshots/claude-cli.png" width="820" alt="Claude CLI with a Starship-rendered status line">
+  </a>
 </p>
 
 ## 🧪 Inside the lab
