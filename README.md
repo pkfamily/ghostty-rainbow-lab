@@ -1,28 +1,34 @@
-# ghostty-rainbow-lab
+<p align="center">
+  <img src="screenshots/rainbow-banner.png" alt="Ghostty Rainbow Lab banner">
+</p>
 
-Notes and configs from an afternoon of making a fresh [Ghostty](https://ghostty.org)
-install colorful on macOS. Everything here is working config, not aspirational.
+<h1 align="center">🌈 Ghostty Rainbow Lab</h1>
 
-Ghostty 1.3.1 · macOS 25.5 (Darwin) · zsh
+<p align="center">
+  A colorful macOS terminal setup for Ghostty, Starship, Claude Code, and Codex.<br>
+  Working configuration, measured behavior, and the gotchas worth remembering.
+</p>
 
-![Ghostty Rainbow Lab terminal showcase](screenshots/terminal-showcase.png)
+<p align="center">
+  <img alt="Ghostty 1.3.1" src="https://img.shields.io/badge/Ghostty-1.3.1-c77dff?style=for-the-badge&logo=ghostty&logoColor=white">
+  <img alt="macOS 25.5" src="https://img.shields.io/badge/macOS-25.5-4fa8ff?style=for-the-badge&logo=apple&logoColor=white">
+  <img alt="zsh" src="https://img.shields.io/badge/shell-zsh-4fd6d6?style=for-the-badge&logo=gnubash&logoColor=14121f">
+  <img alt="Starship" src="https://img.shields.io/badge/prompt-Starship-5ddb7f?style=for-the-badge&logo=starship&logoColor=14121f">
+</p>
 
----
+<p align="center">
+  <a href="#-showcase">Showcase</a> •
+  <a href="#-install">Install</a> •
+  <a href="#-color-systems">Color systems</a> •
+  <a href="#-agent-clis">Agent CLIs</a> •
+  <a href="#-gotchas">Gotchas</a>
+</p>
 
-## What's here
+<p align="center">
+  <img src="screenshots/ansi-palette.svg" alt="The 16-color Ghostty Rainbow ANSI palette">
+</p>
 
-```
-ghostty/config          main Ghostty config
-ghostty/themes/Rainbow  custom 16-slot ANSI palette
-scripts/                palette + lolcat test harnesses (no API calls)
-starship/               9 prompt themes, incl. a hand-tuned "custom"
-zsh/_switcher.zsh       `prompt-theme` command
-zsh/zshrc-additions.zsh everything appended to ~/.zshrc
-claude/                 starship-rendered Claude Code status line
-codex/config.toml       native Codex CLI status-line and title settings
-```
-
-## Install
+## 🚀 Install
 
 ```zsh
 brew install zoxide lolcat eza starship
@@ -38,7 +44,43 @@ Reload Ghostty with `cmd+shift+,`.
 
 ---
 
-## The three color systems (this was the main confusion)
+## 🌈 Showcase
+
+### Ghostty Rainbow
+
+The custom 16-slot ANSI palette keeps semantic terminal colors readable while
+giving every classic CLI tool a brighter personality.
+
+![Ghostty Rainbow ANSI palette and styles](screenshots/ghostty-rainbow.png)
+
+### Starship Prompt
+
+Nine switchable prompt themes, including a hand-tuned powerline gradient from
+purple through blue, cyan, green, and yellow.
+
+![Rainbow Starship prompt themes](screenshots/starship-prompt.png)
+
+### Claude CLI
+
+Claude Code's status line is rendered through Starship so project, model,
+branch, context, and cost feel like part of the same terminal.
+
+![Claude CLI with a Starship-rendered status line](screenshots/claude-cli.png)
+
+## 🧪 Inside the lab
+
+| Area | What it contains |
+|---|---|
+| `ghostty/` | Main Ghostty config and the custom `Rainbow` ANSI theme |
+| `starship/` | Nine prompt themes, including the hand-tuned `custom` preset |
+| `zsh/` | Shell additions and the `prompt-theme` switcher |
+| `scripts/` | Palette and lolcat test harnesses with no API calls |
+| `claude/` | Starship-rendered Claude Code status line |
+| `codex/` | Native Codex CLI status-line and terminal-title settings |
+
+---
+
+## 🎨 Color systems
 
 Terminal color is not one thing. These are independent and don't interact.
 
@@ -79,7 +121,12 @@ You never see the palette as a rainbow — only one slot at a time.
 
 ---
 
-## Gotchas that cost real time
+## 🧯 Gotchas
+
+<details>
+<summary><strong>Open the field notes that cost real time to learn</strong></summary>
+
+<br>
 
 ### `lolcat -F` depends on text length
 
@@ -124,9 +171,11 @@ maps world-writable directories to a **green background**, which looks alarming
 in a folder full of cloned repos. Slots 10 and 11 here are set to match normal
 directories instead.
 
+</details>
+
 ---
 
-## Rainbow that doesn't break workflows
+## 🌈 Color without broken workflows
 
 The rule: **decorate, never overwrite semantics.** Color that carries meaning
 (diffs, file types, syntax) must stay untouched.
@@ -145,7 +194,14 @@ Not safe:
 
 ---
 
-## Claude Code status line, rendered by starship
+## 🤖 Agent CLIs
+
+### Claude Code status line, rendered by Starship
+
+<details>
+<summary><strong>How the Claude Code status line works</strong></summary>
+
+<br>
 
 Claude Code's `statusLine` runs any command, hands it session JSON on stdin, and
 prints stdout in a row at the bottom of the UI. Point it at starship and the bar
@@ -176,7 +232,14 @@ Then set `statusLine.command` in `~/.claude/settings.json` to that
 `statusline.sh`, keeping `refreshInterval` so the budget line stays current
 while the session is idle.
 
-## Codex CLI status line
+</details>
+
+### Codex CLI status line
+
+<details>
+<summary><strong>How the native Codex status line differs</strong></summary>
+
+<br>
 
 Codex CLI has a native, fixed-item status line rather than Claude Code's
 external command hook. The checked-in config selects model/reasoning, project,
@@ -195,7 +258,14 @@ commands are not supported, so the Claude statusline script cannot be reused
 inside Codex's TUI. Codex's native `terminal_title` setting does work with this
 setup because Ghostty's competing shell title hook is disabled.
 
-### Gotchas
+</details>
+
+### Claude status-line gotchas
+
+<details>
+<summary><strong>Starship environment, context gauges, and build-cli ownership</strong></summary>
+
+<br>
 
 **`starship init zsh` exports `STARSHIP_SHELL=zsh`, and the script inherits it.**
 starship then wraps output in zsh's non-printing markers and doubles every
@@ -237,7 +307,9 @@ Setting it touches `~/.config/build-cli/config.json` only. Verified by checksum
 that `~/.claude/settings.json` and the generated script are both left alone, so
 enabling it cannot clobber a `statusLine.command` you have already repointed.
 
-## Marking agent-driven shells
+</details>
+
+## 🤖 Agent-driven shells
 
 Claude Code exports `CLAUDECODE=1`, `CLAUDE_CODE_ENTRYPOINT`, and
 `CLAUDE_CODE_SESSION_ID`, and interactive shells it spawns inherit them. The
@@ -248,6 +320,11 @@ marker goes in the **tab title**, not the prompt:
 …/Repos/ghostty-rainbow-lab        normal tab
 󰚩 git rebase -i main               while a command runs
 ```
+
+<details>
+<summary><strong>Why the marker lives in the tab title, plus testing details</strong></summary>
+
+<br>
 
 ### Why the title and not the prompt
 
@@ -341,7 +418,9 @@ verified the output carries exactly one `ESC`, the opener.
 Related: interactive shells spawned by Claude Code run `~/.zshrc` in full, so the
 lolcat greeting fires on each one.
 
-## Commands added
+</details>
+
+## 🧰 Commands added
 
 | Command | Does |
 |---|---|
@@ -354,7 +433,7 @@ lolcat greeting fires on each one.
 | `scripts/palette-test.sh` | render all 16 slots with indices |
 | `scripts/rainbow-test.sh` | lolcat `-F` / `-S` / `-p` sweeps |
 
-## Ghostty options worth knowing
+## ⚙️ Ghostty options worth knowing
 
 ```
 palette-generate = true     # derive all 256 colors from your base 16 (1.3+)
@@ -366,7 +445,7 @@ theme = light:X,dark:Y      # auto-switch with macOS appearance
 `palette-generate` is off by default because legacy TUIs hardcode xterm's
 256-color assumptions. Not enabled here — worth trying, easy to revert.
 
-## Per-window profiles
+## 🪟 Per-window profiles
 
 Ghostty has no profile switcher. On macOS the CLI can't launch the terminal
 directly — use `open`:
