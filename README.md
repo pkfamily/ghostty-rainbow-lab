@@ -65,7 +65,9 @@ purple through blue, cyan, green, and yellow.
 Claude Code's status line is rendered through Starship so project, model,
 branch, context, and cost feel like part of the same terminal.
 
-![Claude CLI with a Starship-rendered status line](screenshots/claude-cli.png)
+<p align="center">
+  <img src="screenshots/claude-cli.png" width="820" alt="Claude CLI with a Starship-rendered status line">
+</p>
 
 ## 🧪 Inside the lab
 
