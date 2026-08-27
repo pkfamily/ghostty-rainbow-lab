@@ -5,6 +5,8 @@ install colorful on macOS. Everything here is working config, not aspirational.
 
 Ghostty 1.3.1 · macOS 25.5 (Darwin) · zsh
 
+![Ghostty Rainbow Lab terminal showcase](screenshots/terminal-showcase.png)
+
 ---
 
 ## What's here
