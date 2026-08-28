@@ -7,26 +7,67 @@ setopt interactive_comments
 # zoxide — smarter cd (use `z <partial-name>` to jump)
 eval "$(zoxide init zsh)"
 
-# Rainbow greeting on new shells. Regenerate the art with:
-#   figlet -f smslant poonv
-# It is baked in rather than shelled out because this runs on EVERY interactive
-# shell, and Claude Code spawns those constantly — same reason the date uses
-# zsh's builtin prompt strftime instead of date(1). lolcat is the only fork left.
-#
-# Single-quoted: the art is mostly backslashes and must not be escape-processed.
-# Banner and date share ONE lolcat pipe so the gradient runs continuously down
-# the block rather than restarting on the date line. -F 0.3 is correct despite
-# looking paragraph-sized — rows are 27 chars, which is one full hue sweep each.
-if command -v lolcat >/dev/null 2>&1; then
+# Saved greeting profiles. Copy zsh/greetings/ to the configured directory;
+# greeting-profile switches the saved choice for subsequent shells.
+typeset -g GREETING_PROFILE_DIR="${GREETING_PROFILE_DIR:-${XDG_CONFIG_HOME:-$HOME/.config}/ghostty-rainbow-lab/greetings}"
+typeset -g GREETING_PROFILE_FILE="${GREETING_PROFILE_FILE:-${XDG_CONFIG_HOME:-$HOME/.config}/ghostty-rainbow-lab/greeting-profile}"
+
+_greeting_active_profile() {
+  local profile=landscape
+  [[ -r $GREETING_PROFILE_FILE ]] && IFS= read -r profile < "$GREETING_PROFILE_FILE"
+  [[ -r "$GREETING_PROFILE_DIR/$profile.txt" ]] || profile=landscape
+  print -r -- "$profile"
+}
+
+_greeting_render() {
+  local profile=$(_greeting_active_profile)
+  local profile_file="$GREETING_PROFILE_DIR/$profile.txt"
+
+  [[ -r $profile_file && -x "$(command -v lolcat)" ]] || return
+
   {
-    print -r -- '
-   ___  ___  ___  ___ _  __
-  / _ \/ _ \/ _ \/ _ \ |/ /
- / .__/\___/\___/_//_/___/
-/_/'
+    local line
+    while IFS= read -r line || [[ -n $line ]]; do
+      print -r -- "$line"
+    done < "$profile_file"
     print -r -- "welcome back  ·  ${(%):-"%D{%A %d %B}"}"
-  } | lolcat -f -S 240 -F 0.3
-fi
+  } | lolcat -f -S 355 -F 0.2
+}
+
+greeting-profile() {
+  local profile current file
+  current=$(_greeting_active_profile)
+
+  case $# in
+    0)
+      print -r -- "active greeting: $current"
+      print -r -- "available greetings:"
+      for file in "$GREETING_PROFILE_DIR"/*.txt(N); do
+        profile=${file:t:r}
+        print -r -- "  $([[ $profile == $current ]] && print -n '●' || print -n ' ') $profile"
+      done
+      ;;
+    1)
+      profile=$1
+      [[ -r "$GREETING_PROFILE_DIR/$profile.txt" ]] || {
+        print -u2 -r -- "unknown greeting profile: $profile"
+        return 1
+      }
+      mkdir -p -- "${GREETING_PROFILE_FILE:h}" || return 1
+      print -r -- "$profile" >| "$GREETING_PROFILE_FILE" || {
+        print -u2 -r -- "could not save greeting profile: $GREETING_PROFILE_FILE"
+        return 1
+      }
+      print -r -- "greeting profile set to: $profile"
+      ;;
+    *)
+      print -u2 -r -- "usage: greeting-profile [name]"
+      return 2
+      ;;
+  esac
+}
+
+_greeting_render
 
 # Colorized ls (BSD/macOS)
 export CLICOLOR=1

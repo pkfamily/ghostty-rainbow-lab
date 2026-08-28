@@ -35,12 +35,14 @@
 
 ```zsh
 brew install zoxide lolcat eza starship
-brew install figlet   # optional — only to regenerate the greeting banner
+brew install figlet   # optional — useful for creating custom text banners
 brew install --cask font-jetbrains-mono-nerd-font
 
 cp -r ghostty/* ~/.config/ghostty/
 mkdir -p ~/.config/starship-themes && cp starship/*.toml ~/.config/starship-themes/
 cp zsh/_switcher.zsh ~/.config/starship-themes/
+mkdir -p ~/.config/ghostty-rainbow-lab
+cp -r zsh/greetings ~/.config/ghostty-rainbow-lab/
 cat zsh/zshrc-additions.zsh >> ~/.zshrc
 ```
 
@@ -77,15 +79,36 @@ branch, context, and cost feel like part of the same terminal.
 
 ### ✨ Rainbow startup greeting
 
-Every new interactive zsh shell opens with a small ASCII greeting and the date,
-colored by [`lolcat`](https://github.com/busyloop/lolcat). The banner and date
-share one pipe so the gradient flows continuously across the whole block. The
-startup hook is intentionally guarded with `command -v lolcat`, so the shell
-still works normally if lolcat is not installed.
+Every new interactive zsh shell opens with a colored ASCII landscape of
+mountains, sunset, stars, and reflected water. [`lolcat`](https://github.com/busyloop/lolcat)
+applies the truecolor gradient directly to a saved text profile, so the greeting
+does not depend on an image renderer.
 
-<p align="center">
-  <img src="screenshots/startup-greeting.png" width="900" alt="Rainbow lolcat startup greeting in Ghostty">
-</p>
+```text
+       *                    +                 .                   *
+          +              .                 *                .
+       .         v  v              *              .         +
+  .           *   /\                 +           *       /\             +
+                 /  \    /\                       /\    /  \
+       /\       / /\ \  /  \      .------.       /  \  / /\ \       /\
+      /  \  ^  /  /\  \/    \   /          \    /    \/  /\  \  ^  /  \
+____________|__________________/------------\___________________|___________
+    -----      ----                ------                ----      -----
+           ----          ---        ----        ---          ----
+                   ---         --   ----    --        ---
+                                     --
+          --         ---           --  --           ---         --
+                  --         --    --  --    --         --
+```
+
+Two profiles ship with the lab: `landscape` (the default) and your original
+`poonv` banner. Switch persistently with:
+
+```zsh
+greeting-profile            # show the active and available profiles
+greeting-profile poonv      # use the original poonv banner
+greeting-profile landscape  # switch back to the landscape
+```
 
 ## 🧪 Inside the lab
 
@@ -93,7 +116,7 @@ still works normally if lolcat is not installed.
 |---|---|
 | `ghostty/` | Main Ghostty config and the custom `Rainbow` ANSI theme |
 | `starship/` | Nine prompt themes, including the hand-tuned `custom` preset |
-| `zsh/` | Shell additions, the lolcat startup greeting, and the `prompt-theme` switcher |
+| `zsh/` | Shell additions, saved lolcat greeting profiles, and the `prompt-theme` switcher |
 | `scripts/` | Palette and lolcat test harnesses with no API calls |
 | `claude/` | Starship-rendered Claude Code status line |
 | `codex/` | Native Codex CLI status-line and terminal-title settings |
@@ -131,11 +154,12 @@ theme design is constrained.
 <command> --color=always | cat -v | head -3   # read the ^[[NNm codes, subtract 30
 ```
 
-### The rainbow greeting is NOT the palette
+### The startup greeting is NOT the palette
 
 The startup greeting uses lolcat's truecolor (`38;2;R;G;B`) and bypasses the
-palette entirely. Deleting the `Rainbow` theme wouldn't change it. Same for the
-starship prompt. The palette only affects programs that emit *indexed* color.
+palette entirely.
+Deleting the `Rainbow` theme wouldn't change them. Same for the Starship prompt.
+The palette only affects programs that emit *indexed* color.
 
 You never see the palette as a rainbow — only one slot at a time.
 
@@ -456,6 +480,8 @@ lolcat greeting fires on each one.
 | `prompt-theme` | list prompt themes (● = active) |
 | `prompt-theme <name>` | switch (tab-completes) |
 | `prompt-theme -` | revert to previous |
+| `greeting-profile` | list saved greeting profiles (● = active) |
+| `greeting-profile <name>` | persistently switch the startup greeting |
 | `scripts/palette-test.sh` | render all 16 slots with indices |
 | `scripts/rainbow-test.sh` | lolcat `-F` / `-S` / `-p` sweeps |
 
