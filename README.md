@@ -85,7 +85,7 @@ applies the truecolor gradient directly to a saved text profile, so the greeting
 does not depend on an image renderer.
 
 <p align="center">
-  <img src="screenshots/startup-greeting.svg" width="920" alt="Rainbow ASCII sunset greeting with stars, mountains, trees, and water">
+  <img src="screenshots/startup-greeting-rainbow.png" width="920" alt="Rainbow ASCII sunset greeting with stars, mountains, trees, and water">
 </p>
 
 <details>
