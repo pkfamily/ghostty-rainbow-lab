@@ -84,6 +84,15 @@ mountains, sunset, stars, and reflected water. [`lolcat`](https://github.com/bus
 applies the truecolor gradient directly to a saved text profile, so the greeting
 does not depend on an image renderer.
 
+<p align="center">
+  <img src="screenshots/startup-greeting.svg" width="920" alt="Rainbow ASCII sunset greeting with stars, mountains, trees, and water">
+</p>
+
+<details>
+<summary>Plain-text landscape source</summary>
+
+<br>
+
 ```text
        *                    +                 .                   *
           +              .                 *                .
@@ -100,6 +109,8 @@ ____________|__________________/------------\___________________|___________
           --         ---           --  --           ---         --
                   --         --    --  --    --         --
 ```
+
+</details>
 
 Two profiles ship with the lab: `landscape` (the default) and your original
 `poonv` banner. Switch persistently with:
