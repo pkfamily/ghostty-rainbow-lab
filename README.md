@@ -48,6 +48,16 @@ cat zsh/zshrc-additions.zsh >> ~/.zshrc
 
 Reload Ghostty with `cmd+shift+,`.
 
+### Changing the font size
+
+The active macOS config is `~/.config/ghostty/config`; the tracked source is
+`ghostty/config`. Keep both in sync when changing `font-size`, then reload with
+`cmd+shift+,` or open a new tab. Verify the value Ghostty parsed with:
+
+```zsh
+ghostty +show-config | grep '^font-size'
+```
+
 ---
 
 ## 🌈 Showcase
