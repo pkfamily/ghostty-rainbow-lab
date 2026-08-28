@@ -1,0 +1,4 @@
+interface:
+  display_name: "Greeting ASCII Art"
+  short_description: "Create terminal-safe ASCII greeting artwork"
+  default_prompt: "Use $greeting-ascii-art to create a cheerful terminal greeting."
