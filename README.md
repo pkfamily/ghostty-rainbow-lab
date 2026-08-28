@@ -112,13 +112,15 @@ ____________|__________________/------------\___________________|___________
 
 </details>
 
-Two profiles ship with the lab: `landscape` (the default) and your original
-`poonv` banner. Switch persistently with:
+Three profiles ship with the lab: `landscape` (the original default),
+`whale-landscape` (the wide mountain-and-forest scene with a subtle whale), and
+your original `poonv` banner. Switch persistently with:
 
 ```zsh
 greeting-profile            # show the active and available profiles
 greeting-profile poonv      # use the original poonv banner
-greeting-profile landscape  # switch back to the landscape
+greeting-profile landscape  # use the original pushed landscape
+greeting-profile whale-landscape  # use the new wide landscape
 ```
 
 ## 🧪 Inside the lab
@@ -131,6 +133,7 @@ greeting-profile landscape  # switch back to the landscape
 | `scripts/` | Palette and lolcat test harnesses with no API calls |
 | `claude/` | Starship-rendered Claude Code status line |
 | `codex/` | Native Codex CLI status-line and terminal-title settings |
+| `.agents/skills/greeting-ascii-art/` | Project-local Codex skill for designing, aligning, previewing, and versioning terminal greetings |
 
 ---
 
