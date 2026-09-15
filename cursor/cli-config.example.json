@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "display": {
+    "showStatusIndicators": false,
+    "showStatusLineRunningTime": false
+  },
+  "statusLine": {
+    "command": "~/.config/ghostty-rainbow-cursor/statusline.sh"
+  }
+}
