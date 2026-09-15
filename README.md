@@ -308,6 +308,51 @@ while the session is idle.
 
 </details>
 
+### Cursor CLI status line
+
+<details>
+<summary><strong>Compact Rainbow footer for Cursor Agent</strong></summary>
+
+<br>
+
+Cursor CLI supports a custom `statusLine`, but it replaces Cursor's native
+footer rather than adding another row. The Claude helper is therefore not
+compatible: it expects Claude session JSON, emits two rows, and includes
+build-cli output. Use the compact Cursor-specific helper instead:
+
+```zsh
+mkdir -p ~/.config/ghostty-rainbow-cursor
+cp cursor/statusline.sh ~/.config/ghostty-rainbow-cursor/statusline.sh
+chmod +x ~/.config/ghostty-rainbow-cursor/statusline.sh
+```
+
+Then, inside Cursor Agent, run `/statusline` and point it at
+`~/.config/ghostty-rainbow-cursor/statusline.sh`. Cursor writes the command
+configuration for you; restart Cursor Agent afterward. The helper keeps model,
+project, branch, and context percentage in one short Rainbow-colored line.
+
+The default colors are purple model, cyan project, green branch, yellow
+context usage, and bright-blue separators. After changing the tracked helper,
+sync the installed copy and restart Cursor Agent:
+
+```zsh
+cp cursor/statusline.sh ~/.config/ghostty-rainbow-cursor/statusline.sh
+chmod +x ~/.config/ghostty-rainbow-cursor/statusline.sh
+```
+
+The project segment uses light text for dark Ghostty backgrounds. If you edit
+the helper, keep its final reset sequence (`ESC[0m`) so the colors do not leak
+into the rest of the Cursor interface.
+
+The checked-in `cli-config.example.json` is useful as a reference, but Cursor
+currently treats `/statusline` as the reliable setup path.
+
+If Cursor still shows its plain working-directory and branch footer, the custom
+command is not active yet: run `/statusline` again and restart the CLI. To
+restore the native footer, remove the custom status line through `/statusline`.
+
+</details>
+
 ### Codex CLI status line
 
 <details>
