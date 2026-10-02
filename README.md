@@ -34,9 +34,7 @@
 ## 🚀 Install
 
 ```zsh
-brew install zoxide lolcat eza starship
-brew install figlet   # optional — useful for creating custom text banners
-brew install --cask font-jetbrains-mono-nerd-font
+./scripts/install.sh
 
 cp -r ghostty/* ~/.config/ghostty/
 mkdir -p ~/.config/starship-themes && cp starship/*.toml ~/.config/starship-themes/
@@ -45,6 +43,10 @@ mkdir -p ~/.config/ghostty-rainbow-lab
 cp -r zsh/greetings ~/.config/ghostty-rainbow-lab/
 cat zsh/zshrc-additions.zsh >> ~/.zshrc
 ```
+
+The installer is macOS-only. It installs the required Nerd Font and verifies
+that Ghostty can see `JetBrainsMono Nerd Font Mono`; it stops with a clear
+message if the font is not available, preventing `?` file icons in `eza`.
 
 Reload Ghostty with `cmd+shift+,`.
 
@@ -124,11 +126,11 @@ ____________|__________________/------------\___________________|___________
 
 Three profiles ship with the lab: `landscape` (the original default),
 `whale-landscape` (the wide mountain-and-forest scene with a subtle whale), and
-your original `poonv` banner. Switch persistently with:
+`banner` (a compact text-art greeting). Switch persistently with:
 
 ```zsh
 greeting-profile            # show the active and available profiles
-greeting-profile poonv      # use the original poonv banner
+greeting-profile banner     # use the compact text-art greeting
 greeting-profile landscape  # use the original pushed landscape
 greeting-profile whale-landscape  # use the new wide landscape
 ```
