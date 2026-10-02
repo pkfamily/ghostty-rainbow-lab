@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 # Rainbow output test harness
 LINE="the quick brown fox jumps over the lazy dog and keeps on running forever"
-SHORT="welcome back, poonv"
+SHORT="welcome back"
 
 hdr() { print "\n\033[1m── $1 ──\033[0m"; }
 
